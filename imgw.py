@@ -9,6 +9,7 @@ from zipfile import ZipFile, BadZipFile, is_zipfile
 import unidecode
 import json
 import multiprocessing
+import sys
 
 
 logger = logging.getLogger(__name__)
@@ -137,5 +138,10 @@ class ImgwHistoricalCollector:
 
 
 if __name__ == "__main__":
-    collector = ImgwHistoricalCollector(years=[2019])
-    print(collector.get(["Szczecin"]))
+    data_type = sys.argv[1]
+    location = sys.argv[2]
+    if data_type == "historical":
+        data_collector = ImgwHistoricalCollector(years=[2019])
+    else:
+        data_collector = ImgwCurrentCollector()
+    print(data_collector.get([location]))
